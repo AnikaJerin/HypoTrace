@@ -1,0 +1,32 @@
+{
+  "name": "hypotrace",
+  "displayName": "HypoTrace",
+  "description": "A privacy-first cognitive debugger that predicts recurring reasoning failures.",
+  "version": "0.6.9",
+  "publisher": "hypotrace",
+  "engines": { "vscode": "^1.136.0" },
+  "categories": ["Other", "Education"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "hypotrace.openDashboard", "title": "HypoTrace: Open Learning Dashboard" },
+      { "command": "hypotrace.scanWorkspace", "title": "HypoTrace: Refresh Current Project Assessment" },
+      { "command": "hypotrace.reset", "title": "HypoTrace: Reset Local Learning Profile" }
+    ],
+    "configuration": {
+      "title": "HypoTrace",
+      "properties": {
+        "hypotrace.proactiveMode": { "type": "boolean", "default": false, "description": "Offer a micro-check at high risk. Off by default." },
+        "hypotrace.liveWarnings": { "type": "boolean", "default": true, "description": "Show a right-corner warning when a learned failure signature reaches the evidence threshold." },
+        "hypotrace.backendUrl": { "type": "string", "default": "http://127.0.0.1:8787", "description": "HypoTrace learning backend. The bundled local backend starts automatically at this address." },
+        "hypotrace.backendUserId": { "type": "string", "default": "local-dev", "description": "Development profile identifier for the HypoTrace backend." },
+        "hypotrace.openAIModel": { "type": "string", "default": "gpt-5-mini", "description": "Model used for privacy-filtered hypothesis and falsifier calls." },
+        "hypotrace.aiCodeAnalysis": { "type": "boolean", "default": true, "description": "After a coding pause, send the active non-private file transiently to your configured HypoTrace backend for personal AI pattern analysis. Code is never written to the learning database." },
+        "hypotrace.projectAssessmentOnOpen": { "type": "boolean", "default": true, "description": "Run one bounded, transient AI assessment when an eligible source project opens. Use the dashboard refresh button for later scans." },
+        "hypotrace.allowCodeContext": { "type": "boolean", "default": false, "description": "Permit sending the current file to OpenAI only after an explicit per-request confirmation for code coaching." },
+        "hypotrace.privateFileGlobs": { "type": "array", "default": ["**/.env", "**/*secret*", "**/*credential*"], "description": "Files excluded entirely from HypoTrace telemetry." }
+      }
+    }
+  }
+}

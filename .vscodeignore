@@ -1,0 +1,14 @@
+.git
+.vscode
+README.md
+pycharm-plugin
+.vsix
+*.vsix
+backend/*.db
+backend/archive
+backend/archive/**
+backend/__pycache__
+backend/__pycache__/**
+demo
+demo/**
+**/*.pyc
