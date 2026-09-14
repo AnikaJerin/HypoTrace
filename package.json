@@ -2,16 +2,30 @@
   "name": "hypotrace",
   "displayName": "HypoTrace",
   "description": "A privacy-first cognitive debugger that predicts recurring reasoning failures.",
-  "version": "0.6.9",
+  "version": "0.7.11",
   "publisher": "hypotrace",
   "engines": { "vscode": "^1.136.0" },
   "categories": ["Other", "Education"],
   "activationEvents": ["onStartupFinished"],
   "main": "./src/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        { "id": "hypotrace", "title": "HypoTrace", "icon": "media/hypotrace.svg" }
+      ]
+    },
+    "views": {
+      "hypotrace": [
+        { "id": "hypotrace.dashboard", "name": "Learning Dashboard", "type": "webview", "when": "true" }
+      ]
+    },
     "commands": [
       { "command": "hypotrace.openDashboard", "title": "HypoTrace: Open Learning Dashboard" },
+      { "command": "hypotrace.showLearningReview", "title": "HypoTrace: Show Latest Learning Insight" },
       { "command": "hypotrace.scanWorkspace", "title": "HypoTrace: Refresh Current Project Assessment" },
+      { "command": "hypotrace.tryGeneratedCheck", "title": "HypoTrace: Try AI Generated Check" },
+      { "command": "hypotrace.openReasoningReplay", "title": "HypoTrace: Open Reasoning Replay" },
+      { "command": "hypotrace.showStatus", "title": "HypoTrace: Show Learning Status" },
       { "command": "hypotrace.reset", "title": "HypoTrace: Reset Local Learning Profile" }
     ],
     "configuration": {

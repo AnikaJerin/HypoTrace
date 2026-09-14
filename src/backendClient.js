@@ -12,4 +12,15 @@ function post(url, payload) {
     }); request.on('error',reject); request.write(body); request.end();
   });
 }
-module.exports={post};
+function get(url) {
+  return new Promise((resolve, reject) => {
+    const target = new URL(url); const client = target.protocol === 'https:' ? https : http;
+    const request = client.request({hostname:target.hostname,port:target.port,path:target.pathname,method:'GET'}, response => {
+      let text=''; response.on('data',chunk=>text+=chunk); response.on('end',()=>{
+        try { const json=JSON.parse(text); if(response.statusCode >= 300) return reject(new Error(json.error || `Backend HTTP ${response.statusCode}`)); resolve(json); }
+        catch (_) { reject(new Error('Backend returned invalid JSON.')); }
+      });
+    }); request.on('error',reject); request.end();
+  });
+}
+module.exports={post,get};

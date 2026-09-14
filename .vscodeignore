@@ -4,6 +4,7 @@ README.md
 pycharm-plugin
 .vsix
 *.vsix
+*.zip
 backend/*.db
 backend/archive
 backend/archive/**

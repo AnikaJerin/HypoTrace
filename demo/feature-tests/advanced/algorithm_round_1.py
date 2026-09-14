@@ -1,4 +1,3 @@
-# Intentional invariant error: misses the final dynamic-programming state.
 def ways(steps):
     dp = [0] * (steps + 1)
     dp[0] = 1

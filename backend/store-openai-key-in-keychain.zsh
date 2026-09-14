@@ -1,6 +1,4 @@
 #!/bin/zsh
-# Store the HypoTrace key once in the signed-in user's macOS login Keychain.
-# This script does not write the key to disk or print it.
 set -euo pipefail
 
 read -rs "HYPOTRACE_SECRET?Paste your OpenAI API key: "

@@ -1,4 +1,3 @@
-# Intentional wrong-algorithm result: greedy selection is not always optimal for this task.
 def non_adjacent_max(values):
     return sum(value for value in values if value > 0)
 

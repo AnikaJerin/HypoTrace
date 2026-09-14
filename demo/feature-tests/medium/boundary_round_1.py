@@ -1,4 +1,3 @@
-# Intentional boundary failure.
 def final_item(values):
     return values[len(values)]
 

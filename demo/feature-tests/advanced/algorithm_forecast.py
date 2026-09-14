@@ -1,4 +1,3 @@
-# Forecast opportunity: state the invariant before implementing.
 def non_adjacent_max(values):
     previous_two = previous_one = 0
     for value in values:

@@ -1,4 +1,3 @@
-/* OpenAI Responses API client. The extension supplies only sanitized episode objects. */
 const https = require('https');
 const API = 'https://api.openai.com/v1/responses';
 
@@ -43,22 +42,6 @@ const falsifierSchema = {
     confounds:{type:'array',items:{type:'string'}}, discriminating_test:{type:'string'}, recommended_confidence_delta:{type:'number',minimum:-.5,maximum:.2}, recommended_intervention:{type:'string'}
   }
 };
-const coachSchema = {
-  type:'object', additionalProperties:false,
-  required:['diagnosis','why_it_happened','minimal_fix','learning_focus','practice_prompt'],
-  properties:{
-    diagnosis:{type:'string'}, why_it_happened:{type:'string'}, minimal_fix:{type:'string'},
-    learning_focus:{type:'string'}, practice_prompt:{type:'string'}
-  }
-};
-const evolutionSchema = {
-  type:'object', additionalProperties:false,
-  required:['decision','rationale','variant_procedure','expected_mechanism','evaluation_plan'],
-  properties:{
-    decision:{type:'string',enum:['mutate','promote','retire','hold']}, rationale:{type:'string'}, variant_procedure:{type:'string'},
-    expected_mechanism:{type:'string'}, evaluation_plan:{type:'string'}
-  }
-};
 
 async function structured({ apiKey, model, name, schema, instructions, input }) {
   const body = await postJson(API, apiKey, {
@@ -91,14 +74,4 @@ async function embedEpisode(apiKey, trace) {
   if(!body.data?.[0]?.embedding) throw new Error('Embedding request returned no vector.');
   return body.data[0].embedding;
 }
-async function runCodeCoach(apiKey, model, language, code, context) {
-  return structured({apiKey,model,name:'code_coach_output',schema:coachSchema,
-    instructions:'You are an educational code coach. Explain a likely bug and the smallest correction in the supplied code. Give a concise corrected fragment only when it is needed to demonstrate the fix. Then connect it to a transferable learning focus and a short independent practice prompt. Never claim certainty; do not expose secrets.',
-    input:{language,code,context}});
-}
-async function runSkillEvolutionAgent(apiKey, model, skill, evidence) {
-  return structured({apiKey,model,name:'skill_evolution_output',schema:evolutionSchema,
-    instructions:'You are the intervention-skill evolution agent in a developer-learning system. Choose only from mutate, promote, retire, or hold. Use durable evidence (transfer, retention, recurrence, interruption cost, independence), not task completion alone. If mutating, propose one constrained non-solution variation. Never generate code.',
-    input:{skill,evidence}});
-}
-module.exports={runHypothesisAgent,runFalsifierAgent,embedEpisode,runCodeCoach,runSkillEvolutionAgent};
+module.exports={runHypothesisAgent,runFalsifierAgent,embedEpisode};
